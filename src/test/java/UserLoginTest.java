@@ -10,6 +10,8 @@ import static helper.UserGenerator.getRandomUser;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
 import static org.junit.Assert.*;
+import io.qameta.allure.junit4.DisplayName;
+import io.qameta.allure.Description;
 
 public class UserLoginTest {
     CreateUserRequest createUserRequest;
@@ -22,6 +24,8 @@ public class UserLoginTest {
         loginUserRequest = new LoginUserRequest(createUserRequest.getEmail(), createUserRequest.getPassword());
     }
     @Test
+    @DisplayName("User Login")
+    @Description("This test verifies the functionality of user login.")
     public void userLogin() {
         userApiClient.createUser(createUserRequest);
         Response loginResponse = userApiClient.loginUser(loginUserRequest);
@@ -31,6 +35,8 @@ public class UserLoginTest {
     }
 
     @Test
+    @DisplayName("User Login with Incorrect Login and Password")
+    @Description("This test verifies the behavior when attempting to log in with incorrect login and password.")
     public void userLoginWithIncorrectLogAndPass() {
         Response loginResponse = userApiClient.loginUser(loginUserRequest);
         assertEquals(SC_UNAUTHORIZED, loginResponse.statusCode());

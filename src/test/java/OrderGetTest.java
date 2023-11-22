@@ -12,6 +12,8 @@ import static helper.UserGenerator.getRandomUser;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
 import static org.junit.Assert.*;
+import io.qameta.allure.junit4.DisplayName;
+import io.qameta.allure.Description;
 
 public class OrderGetTest {
     CreateOrderRequest createOrderRequest;
@@ -33,6 +35,8 @@ public class OrderGetTest {
     }
 
     @Test
+    @DisplayName("Get Order from User with Authorization")
+    @Description("This test verifies the functionality of retrieving an order from a user account with proper authorization.")
     public void orderGetFromUserWithAuthorization() {
         String accessToken = userApiClient.createUser(createUserRequest).body().jsonPath().getString("accessToken");
         orderApiClient.createOrderWithAuthorization(createOrderRequest, accessToken.substring(7));
@@ -43,6 +47,8 @@ public class OrderGetTest {
     }
 
     @Test
+    @DisplayName("Get Order from User without Authorization")
+    @Description("This test verifies the behavior when attempting to retrieve an order from a user account without proper authorization.")
     public void orderGetFromUserWithoutAuthorization() {
         Response getResponse = orderApiClient.getOrderWithoutAuthorization();
         assertEquals(SC_UNAUTHORIZED, getResponse.statusCode());

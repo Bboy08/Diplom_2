@@ -10,6 +10,8 @@ import static config.ConfigApp.*;
 import static helper.UserGenerator.getRandomUser;
 import static org.apache.http.HttpStatus.*;
 import static org.junit.Assert.*;
+import io.qameta.allure.junit4.DisplayName;
+import io.qameta.allure.Description;
 
 public class OrderCreateTest {
     CreateOrderRequest createOrderRequest;
@@ -35,6 +37,8 @@ public class OrderCreateTest {
     }
 
     @Test
+    @DisplayName("Create Order with Authorization")
+    @Description("This test verifies the functionality of creating an order with proper authorization.")
     public void orderCreateWithAuthorization() {
         String accessToken = userApiClient.createUser(createUserRequest).body().jsonPath().getString("accessToken");
         Response createResponse = orderApiClient.createOrderWithAuthorization(createOrderRequest, accessToken.substring(7));
@@ -45,6 +49,8 @@ public class OrderCreateTest {
     }
 
     @Test
+    @DisplayName("Create Order without Authorization")
+    @Description("This test verifies the behavior when attempting to create an order without proper authorization.")
     public void orderCreateWithoutAuthorization() {
         Response createResponse = orderApiClient.createOrder(createOrderRequest);
         assertEquals(SC_OK, createResponse.statusCode());
@@ -53,6 +59,8 @@ public class OrderCreateTest {
     }
 
     @Test
+    @DisplayName("Create Order without Ingredients")
+    @Description("This test verifies the behavior when attempting to create an order without specifying any ingredients.")
     public void orderCreateWithoutIngredients() {
         Response createResponse = orderApiClient.createOrderWithoutIngredients();
         assertEquals(SC_BAD_REQUEST, createResponse.statusCode());
@@ -61,6 +69,8 @@ public class OrderCreateTest {
     }
 
     @Test
+    @DisplayName("Create Order with Invalid Hash")
+    @Description("This test verifies the behavior when attempting to create an order with an invalid hash.")
     public void orderCreateWithInvalidHash() {
         Response createResponse = orderApiClient.createOrder(createOrderWithInvalidHashRequest);
         assertEquals(SC_INTERNAL_SERVER_ERROR, createResponse.statusCode());

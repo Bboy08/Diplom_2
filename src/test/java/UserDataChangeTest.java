@@ -10,6 +10,8 @@ import static helper.UserGenerator.*;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
 import static org.junit.Assert.*;
+import io.qameta.allure.junit4.DisplayName;
+import io.qameta.allure.Description;
 
 public class UserDataChangeTest {
     CreateUserRequest createUserRequest;
@@ -27,6 +29,8 @@ public class UserDataChangeTest {
     }
 
     @Test
+    @DisplayName("Change User Data")
+    @Description("This test verifies the functionality of changing user data.")
     public void userDataChange() {
         String accessToken = userApiClient.createUser(createUserRequest).body().jsonPath().getString("accessToken");
         Response dataChangeResponse = userApiClient.dataChangeUser(accessToken.substring(7), createUserRequestNewData);
@@ -36,6 +40,8 @@ public class UserDataChangeTest {
     }
 
     @Test
+    @DisplayName("Change User Data - Unauthorized")
+    @Description("This test verifies the behavior when attempting to change user data without proper authorization.")
     public void userDataChangeUnauthorized() {
         userApiClient.createUser(createUserRequest);
         Response dataChangeResponse = userApiClient.dataChangeUserWithoutToken(createUserRequestNewData);

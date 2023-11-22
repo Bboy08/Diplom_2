@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 
 public class CreateOrderRequest {
-    List<String> ingredients;
+    private List<String> ingredients;
 
     public CreateOrderRequest(List<String> ingredients) {
         this.ingredients = ingredients;

@@ -11,6 +11,8 @@ import static helper.UserGenerator.getRandomUserWithoutField;
 import static org.apache.http.HttpStatus.SC_FORBIDDEN;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.junit.Assert.*;
+import io.qameta.allure.junit4.DisplayName;
+import io.qameta.allure.Description;
 
 
 public class UserCreateTest {
@@ -28,6 +30,8 @@ public class UserCreateTest {
     }
 
     @Test
+    @DisplayName("Create User")
+    @Description("This test verifies the functionality of creating a new user.")
     public void userCreate() {
         Response createResponse = userApiClient.createUser(createUserRequest);
         assertEquals(SC_OK, createResponse.statusCode());
@@ -36,6 +40,8 @@ public class UserCreateTest {
     }
 
     @Test
+    @DisplayName("Create User - Same User")
+    @Description("This test verifies the behavior when attempting to create a user with the same information as an existing user.")
     public void userCreateTheSameUser() {
         userApiClient.createUser(createUserRequest);
         Response createResponse = userApiClient.createUser(createUserRequest);
@@ -45,6 +51,8 @@ public class UserCreateTest {
     }
 
     @Test
+    @DisplayName("Create User Without Required Field")
+    @Description("This test verifies the behavior when attempting to create a user without providing a required field.")
     public void userCreateWithoutField() {
         Response createResponse = userApiClient.createUser(createUserWithoutFieldRequest);
         assertEquals(SC_FORBIDDEN, createResponse.statusCode());
